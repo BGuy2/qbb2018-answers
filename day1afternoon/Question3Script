@@ -1,0 +1,5 @@
+#!/bin/bash
+
+grep -v "^@" ~/qbb2018-answers/genomes/BDGP6.sam | grep -v 2110000 | cut -f 3 | sort | uniq -c > ~/qbb2018-answers/day1-lunch/Question3_data             New Buffer                            Modified  
+
+
