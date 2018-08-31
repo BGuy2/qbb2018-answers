@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 
-df = pd.read_csv( sys.argv[1], sep="\t", index_col= "t_name")
+df = pd.read_csv( sys.argv[1], sep="\t")
 
 
 
@@ -20,17 +20,20 @@ After= []
 
 for i in range(len(StartPos)):
      Before.append(StartPos[i])
-     Before[i]= Before[i] + 500
+     Before[i]= Before[i] - 500
      After.append(StartPos[i])
-     After[i]= After[i] - 500
-
+     After[i]= After[i] + 500
+     if Before[i] < 0:
+         Before[i] = 1
+     
+     
 se1= pd.Series(Before)
 df["Before"] = se1.values
 
 se2 = pd.Series(After)
 df["After"] = se2.values
 
-df1=  df[["chr", "Before", "After"] ] 
+df1=  df[["chr", "Before", "After", "t_name"] ] 
 
 
 #df1= df.loc[ :, "chr"]#
@@ -38,5 +41,5 @@ df1=  df[["chr", "Before", "After"] ]
 # df3= df.loc[ :, "After"]
 # #df4= df.loc[ :, "t_name"]
 
-ThisPrints= pd.DataFrame.to_csv(df1, sep="\t")
+ThisPrints= pd.DataFrame.to_csv(df1, sep="\t", header=False, index= False)
 print(ThisPrints)
