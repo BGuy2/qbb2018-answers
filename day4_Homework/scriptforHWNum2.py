@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Usage: timecourse gene samples.csv ctab_dir
+Usage: timecourse samples.csv ctab_dir gene1...gnene2...gene3 etc
 
 create a timecourse of a given transcript for females
 
@@ -21,7 +21,7 @@ def timecourse( csv, gender, gene ):
     fpkms_avg = []
     
     for index, sample, sex, stage in frames.itertuples():
-        filename = os.path.join( sys.argv[3], sample, "t_data.ctab")
+        filename = os.path.join( sys.argv[2], sample, "t_data.ctab")
         ctab_df = pd.read_table( filename, index_col="t_name")
         roi = ctab_df.loc[:,"gene_name"] == gene
         fpkms= ctab_df.loc[roi,"FPKM"]
@@ -29,25 +29,26 @@ def timecourse( csv, gender, gene ):
 
     return fpkms_avg
   #instead of storing these fpkms like in the last script, we are redturning them into females_ or males_fpkms  
+for item in sys.argv[3:]:  
+    var = timecourse(sys.argv[1], "female", item)
     
-var = timecourse(sys.argv[2], "female", sys.argv[1])
 
-stages = ["10", "11", "12", "13", "14A", "14B", "14C", "14D"]
+    stages = ["10", "11", "12", "13", "14A", "14B", "14C", "14D"]
 
 
-fig, ax = plt.subplots()
-ax.plot(var,  color= "blue", label= "fpkms_avg" )
-ax.set_title=( sys.argv[1] + "mean txpt fpkms" )
-plt.tight_layout()
-ax.set_ylabel("FPKMs")
-ax.set_xlabel("stage")
-plt.tight_layout()
-box=ax.get_position()
-ax.set_position([box.x0, box.y0, box.width * 0.8, box.height] )
-ax.legend(loc='center left', bbox_to_anchor=(1,0.5), frameon = False)
-#plt.xticks(stages, rotation= "vertical")
-fig.savefig( "genetimecourseMF.png")
-plt.close( fig )
+    fig, ax = plt.subplots()
+    ax.plot(var,  color= "blue", label= "fpkms_avg" )
+    plt.suptitle= ( item + "mean txpt fpkms" )
+    plt.tight_layout()
+    ax.set_ylabel("FPKMs")
+    ax.set_xlabel("stage")
+    plt.tight_layout()
+    box=ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height] )
+    ax.legend(loc='center left', bbox_to_anchor=(1,0.5), frameon = False)
+    #plt.xticks(stages, rotation= "vertical")
+    fig.savefig("{0}.png".format(item))
+    plt.close( fig )
 
 
 
