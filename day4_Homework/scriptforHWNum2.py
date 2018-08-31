@@ -31,7 +31,27 @@ def timecourse( csv, gender, gene ):
   #instead of storing these fpkms like in the last script, we are redturning them into females_ or males_fpkms  
     
 var = timecourse(sys.argv[2], "female", sys.argv[1])
-print( var ) 
+
+stages = ["10", "11", "12", "13", "14A", "14B", "14C", "14D"]
+
+
+fig, ax = plt.subplots()
+ax.plot(var,  color= "blue", label= "fpkms_avg" )
+ax.set_title=( sys.argv[1] + "mean txpt fpkms" )
+plt.tight_layout()
+ax.set_ylabel("FPKMs")
+ax.set_xlabel("stage")
+plt.tight_layout()
+box=ax.get_position()
+ax.set_position([box.x0, box.y0, box.width * 0.8, box.height] )
+ax.legend(loc='center left', bbox_to_anchor=(1,0.5), frameon = False)
+#plt.xticks(stages, rotation= "vertical")
+fig.savefig( "genetimecourseMF.png")
+plt.close( fig )
+
+
+
+#print( var ) 
 
 #
 # females_fpkms = timecourse( sys.argv[2], "female")
@@ -54,8 +74,7 @@ print( var )
 # print(males_fpkmsREP)
 
 #
-# stages = ["10", "11", "12", "13", "14A", "14B", "14C", "14D"]
-#
+
 # fig, ax = plt.subplots()
 # ax.plot( stages, males_fpkms, color= "blue", label= "male" )
 # ax.plot( stages, females_fpkms, color= "red", label= "female" )
