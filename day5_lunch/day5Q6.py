@@ -17,21 +17,28 @@ import statsmodels.formula.api as sm
 
 df_SRRfiles = pd.read_csv( sys.argv[6], sep="\t")
 xpsn= df_SRRfiles.loc[:,"FPKM"]
-
+xpsn= xpsn.abs()
+xpsn +=1
+expression= (np.log(xpsn))
 
 
 df1= pd.read_csv(sys.argv[1], sep="\t")
 df1_1=df1.iloc[:,-1] 
+
 df2= pd.read_csv(sys.argv[2], sep="\t")
-df2_1=df2.iloc[:,-1] 
+df2_1=df2.iloc[:,-1]
+
 df3= pd.read_csv(sys.argv[3], sep="\t")
 df3_1= df3.iloc[:,-1] 
+
 df4= pd.read_csv(sys.argv[4], sep="\t")
 df4_1=df4.iloc[:,-1] 
+
 df5= pd.read_csv(sys.argv[5], sep="\t")
 df5_1= df5.iloc[:,-1]
 
-mod= pd.concat([df1_1, df2_1, df3_1, df4_1, df5_1, xpsn], axis= 1 )   
+
+mod= pd.concat([df1_1, df2_1, df3_1, df4_1, df5_1, expression], axis= 1 )   
 
 mod.columns= ["FPKMS", "H3K4me3", "H3K4me1", "H3K27me3", "H3K27ac","H3K9ac"]
 print(mod)
@@ -47,7 +54,7 @@ ax.set_title("residual from ChIP and FPKMs")
 plt.hist(results.resid_pearson)
 plt.ylabel("Count")
 plt.xlabel('Normalized residuals')
-fig.savefig("residuals.png")
+fig.savefig("loggedresiduals.png")
 plt.close()
 
 
