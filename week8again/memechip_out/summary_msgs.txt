@@ -1,0 +1,2 @@
+Can't locate JSON.pm in @INC (you may need to install the JSON module) (@INC contains: /Users/cmdb/miniconda3/lib/perl5/site_perl/5.22.0/darwin-thread-multi-2level /Users/cmdb/miniconda3/lib/perl5/site_perl/5.22.0 /Users/cmdb/miniconda3/lib/perl5/5.22.0/darwin-thread-multi-2level /Users/cmdb/miniconda3/lib/perl5/5.22.0 .) at /Users/cmdb/miniconda3/bin/meme-chip_html_to_tsv line 18.
+BEGIN failed--compilation aborted at /Users/cmdb/miniconda3/bin/meme-chip_html_to_tsv line 18.

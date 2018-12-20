@@ -1,0 +1,54 @@
+Invoking:
+  getsize memechip_out/ER4_fasta_meme.fa 1> $metrics
+Finished invoke:
+  name: count_seqs  status: 0  time: 0.021008
+Invoking:
+  fasta-most -min 50 < memechip_out/ER4_fasta_meme.fa 1> $metrics
+Finished invoke:
+  name: most_seqs  status: 0  time: 0.071584
+Invoking:
+  fasta-center -dna -len 100 < memechip_out/ER4_fasta_meme.fa 1> memechip_out/seqs-centered
+Finished invoke:
+  name: center_seqs  status: 0  time: 0.080389
+Invoking:
+  fasta-shuffle-letters memechip_out/seqs-centered memechip_out/seqs-shuffled -kmer 2 -tag -dinuc -dna -seed 1
+Finished invoke:
+  name: shuffle_seqs  status: 0  time: 0.013012
+Invoking:
+  fasta-get-markov -nostatus -nosummary -dna -m 1 memechip_out/ER4_fasta_meme.fa memechip_out/background
+Finished invoke:
+  name: bg  status: 0  time: 0.012594
+Invoking:
+  meme memechip_out/seqs-centered -oc memechip_out/meme_out -mod zoops -nmotifs 3 -minw 6 -maxw 20 -bfile memechip_out/background -dna -revcomp -nostatus
+Finished invoke:
+  name: meme  status: 0  time: 11.837363
+Invoking:
+  dreme -v 1 -oc memechip_out/dreme_out -png -dna -p memechip_out/seqs-centered -n memechip_out/seqs-shuffled
+Finished invoke:
+  name: dreme  status: 256  time: 0.06758
+Invoking:
+  centrimo -seqlen 566 -verbosity 1 -oc memechip_out/centrimo_out -bfile memechip_out/background memechip_out/ER4_fasta_meme.fa memechip_out/meme_out/meme.xml JASPAR_CORE_2016_vertebrates.meme
+Finished invoke:
+  name: centrimo  status: 0  time: 0.696828
+Invoking:
+  tomtom -verbosity 1 -oc memechip_out/meme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc -bfile memechip_out/background memechip_out/meme_out/meme.xml JASPAR_CORE_2016_vertebrates.meme
+Finished invoke:
+  name: meme_tomtom  status: 0  time: 3.059263
+Invoking:
+  tomtom -verbosity 1 -text -thresh 0.1 memechip_out/combined.meme memechip_out/combined.meme 1> memechip_out/motif_alignment.txt
+Finished invoke:
+  name: align  status: 0  time: 0.032699
+Invoking:
+  spamo -verbosity 1 -oc memechip_out/spamo_out_1 -bgfile memechip_out/background -primary ABRGYGCCMCCTRGTGGYVR memechip_out/ER4_fasta_meme.fa memechip_out/meme_out/meme.xml memechip_out/meme_out/meme.xml JASPAR_CORE_2016_vertebrates.meme
+Finished invoke:
+  name: spamo1  status: 0  time: 2.422524
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc memechip_out/fimo_out_1 --bgfile memechip_out/background --motif ABRGYGCCMCCTRGTGGYVR memechip_out/meme_out/meme.xml memechip_out/ER4_fasta_meme.fa
+Finished invoke:
+  name: fimo1  status: 0  time: 0.10536
+Writing output
+Invoking:
+  meme-chip_html_to_tsv memechip_out/meme-chip.html memechip_out/summary.tsv
+Finished invoke:
+  name: summary  status: 512  time: 0.038521
+Done
